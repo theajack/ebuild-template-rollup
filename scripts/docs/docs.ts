@@ -10,4 +10,4 @@ const win = (window as any);
 
 win.main = main;
 
-console.log(main.content + '3322');
+console.log(main.content);

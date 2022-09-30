@@ -4,30 +4,27 @@
  * @Description: Coding something
  */
 
-const execa = require('execa');
-const {resolveRootPath, copyFile, buildPackageJson} = require('./utils');
+const {
+  copyFile, buildPackageJson, writeJsonIntoFile,
+  writeFile,
+} = require('../utils');
+const pkg = require('../../package.json');
+const {build, builddts} = require('../rollup.base');
 
-async function build () {
-  await execa(
-    'node',
-    [
-      resolveRootPath('node_modules/rollup/dist/bin/rollup'),
-      '-c',
-      resolveRootPath('scripts/build/rollup.config.js'),
-      // '--environment',
-      // [
-      //   `PACKAGE_NAME:${dirName}`,
-      // ],
-    ],
-    {stdio: 'inherit'},
-  );
-}
 
 async function main () {
+  const version = process.argv[2];
+  if (!version) throw new Error('Invalid version');
+  pkg.version = version;
+  writeJsonIntoFile('@package.json', pkg);
+
+  writeFile('@src/version.ts', `export default '${pkg.version}';`);
   await build();
+  await builddts();
   buildPackageJson();
   copyFiles();
 }
+
 
 function copyFiles () {
   copyFile('@LICENSE', '@npm/LICENSE');

@@ -33,7 +33,9 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Npm Install
-        run: npm install
+        run: |
+          npm install pnpm -g
+          pnpm install
 
       - name: Version
         id: version
@@ -43,10 +45,10 @@ jobs:
           echo "::set-output name=version::${version}"
 
       - name: Build # build npm
-        run: npm run eb:build -- ${{ steps.version.outputs.version }}
+        run: npm run build -- ${{ steps.version.outputs.version }}
 
       - name: Build Docs
-        run: npm run eb:docs -- ${{ steps.version.outputs.version }}
+        run: npm run build:docs -- ${{ steps.version.outputs.version }}
 
       - name: Pages # github pages
         uses: JamesIves/github-pages-deploy-action@v4.3.0
@@ -65,7 +67,9 @@ jobs:
       - name: Publish # npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
-        run: npm run eb:publish -- ${{ steps.version.outputs.version }}
+        run: |
+          cd npm
+          npm publish
       
       - name: Purge # purge cdn
-        run: npm run eb:purge -- ${{ steps.version.outputs.version }}
+        run: npm run purge
