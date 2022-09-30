@@ -1,4 +1,5 @@
 node_modules
-dist
-cdn
+/dist
+/cdn
 .pnpm-debug.log
+/npm

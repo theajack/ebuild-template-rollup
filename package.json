@@ -10,7 +10,7 @@
   "typings": "ebuild-demo.min.d.ts",
   "scripts": {
     "lint": "eslint src --ext ts",
-    "_dev": "node scripts/dev.js",
+    "_dev": "node scripts/dev/dev.js",
     "_serve": "serve scripts/dev",
     "dev": "run-p _dev _serve",
     "build": "node scripts/build/build.js"
