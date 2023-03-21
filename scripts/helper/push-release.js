@@ -10,8 +10,8 @@
 const {exec} = require('../utils');
 
 async function delTag (tagName) {
-  await exec(`git tag -d ${tagName}`);
-  await exec(`git push origin :refs/tags/${tagName}`);
+    await exec(`git tag -d ${tagName}`);
+    await exec(`git push origin :refs/tags/${tagName}`);
 }
 
 // 版本发布 del 表示需要覆盖上一个版本 一般不需要
@@ -22,18 +22,18 @@ async function delTag (tagName) {
 // npm run release -- vx.x.x no-del
 
 async function main () {
-  const argv = process.argv.slice(2);
+    const argv = process.argv.slice(2);
   
-  const tagName = argv[0];
-  if (argv[1] !== 'no-del') {
-    console.log(`Start delete tag ${tagName}...`);
-    await delTag(tagName);
-  }
-  console.log(`Start create tag ${tagName}...`);
-  await exec(`git tag -m "version ${tagName}" ${tagName} master`);
-  console.log(`Start push tag ${tagName}...`);
-  await exec('git push --tags');
-  console.log('Finished!');
+    const tagName = argv[0];
+    if (argv[1] !== 'no-del') {
+        console.log(`Start delete tag ${tagName}...`);
+        await delTag(tagName);
+    }
+    console.log(`Start create tag ${tagName}...`);
+    await exec(`git tag -m "version ${tagName}" ${tagName} master`);
+    console.log(`Start push tag ${tagName}...`);
+    await exec('git push --tags');
+    console.log('Finished!');
 }
 
 main();

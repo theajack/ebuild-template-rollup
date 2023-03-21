@@ -9,13 +9,14 @@
     "jsdelivr": "ebuild-demo.min.js",
     "typings": "ebuild-demo.min.d.ts",
     "scripts": {
-        "lint": "eslint src --ext ts",
+        "lint": "eslint --fix --ext .js --ext .ts scripts src",
         "dev": "node scripts/dev/dev.js",
         "build": "node scripts/build/build.js",
         "dev:docs": "node scripts/docs/dev.js",
         "build:docs": "node scripts/docs/build.js",
         "purge": "node scripts/purge-cdn.js",
-        "release": "node scripts/push-release.js"
+        "release": "node scripts/push-release.js",
+        "publish": "node scripts/publish.js"
     },
     "keywords": [],
     "license": "MIT",

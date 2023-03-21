@@ -8,52 +8,52 @@ const {build} = require('esbuild');
 const {yamlPlugin} = require('esbuild-plugin-yaml');
 const {dtsPlugin} = require('esbuild-plugin-d.ts');
 const {
-  transfromFilePath
+    transfromFilePath
 } = require('./utils');
 
 function buildBaseConfig ({
-  inputFile = '@scripts/dev/index.ts',
-  outFile = '@scripts/dev/bundle.js'
+    inputFile = '@scripts/dev/index.ts',
+    outFile = '@scripts/dev/bundle.js'
 } = {}) {
-  let index = 0;
-  return {
-    entryPoints: [
-      transfromFilePath(inputFile)
-    ],
-    outfile: transfromFilePath(outFile),
-    bundle: true,
-    sourcemap: true,
-    format: 'cjs',
-    globalName: 'EbuildDemo',
-    platform: 'browser',
-    // plugins:
-    //   format === 'cjs' || pkg.buildOptions?.enableNonBrowserBranches
-    //     ? [nodePolyfills.default()]
-    //     : undefined,
-    // define: {
-    //   __COMMIT__: '"dev"',
-    //   __VERSION__: `"${pkg.version}"`,
-    // },
-    plugins: [
-      yamlPlugin(),
-      dtsPlugin(),
-    ],
-    watch: {
-      onRebuild (error) {
-        index ++;
-        if (!error) console.log(`sl:rebuilt: ${outFile} x ${index} [${new Date().toLocaleTimeString()}]`);
-      },
-    },
-  };
+    let index = 0;
+    return {
+        entryPoints: [
+            transfromFilePath(inputFile)
+        ],
+        outfile: transfromFilePath(outFile),
+        bundle: true,
+        sourcemap: true,
+        format: 'cjs',
+        globalName: 'EbuildDemo',
+        platform: 'browser',
+        // plugins:
+        //   format === 'cjs' || pkg.buildOptions?.enableNonBrowserBranches
+        //     ? [nodePolyfills.default()]
+        //     : undefined,
+        // define: {
+        //   __COMMIT__: '"dev"',
+        //   __VERSION__: `"${pkg.version}"`,
+        // },
+        plugins: [
+            yamlPlugin(),
+            dtsPlugin(),
+        ],
+        watch: {
+            onRebuild (error) {
+                index ++;
+                if (!error) console.log(`sl:rebuilt: ${outFile} x ${index} [${new Date().toLocaleTimeString()}]`);
+            },
+        },
+    };
 }
 
 function esbuild (config) {
-  build(config).then(() => {
-    console.log(`watching: ${config.outfile}`);
-  });
+    build(config).then(() => {
+        console.log(`watching: ${config.outfile}`);
+    });
 }
 
 module.exports = {
-  esbuild,
-  buildBaseConfig,
+    esbuild,
+    buildBaseConfig,
 };

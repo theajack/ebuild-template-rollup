@@ -8,6 +8,6 @@ import version from './version';
 console.log('Hello world!');
 
 export default {
-  content: 'Hello Ebuild!',
-  version,
+    content: 'Hello Ebuild!',
+    version,
 };
